@@ -20,13 +20,9 @@ public class BoardManager : MonoBehaviour
     public int maxFood;
     public Tile[] GroundTiles;
     public Tile[] WallTiles;
-
     public PlayerController Player;
-
     public FoodObject[] FoodPrefabs;
-
     public WallObject[] WallPrefabs;
-
 
     public void Init()
     {
@@ -66,8 +62,7 @@ public class BoardManager : MonoBehaviour
     void GenerateFood()
     {
         FoodObject foodPrefab;
-        foodPrefab = FoodPrefabs[Random.Range(0, FoodPrefabs.Length)];
-        Debug.Log("apa nourriture ?");
+        foodPrefab = FoodPrefabs[Random.Range(1, FoodPrefabs.Length)];
         int foodCount = Random.Range(minFood, maxFood);
 
         for (int i = 0; i < foodCount; i++)
@@ -83,7 +78,6 @@ public class BoardManager : MonoBehaviour
 
     void GenerateWall()
     {
-
         WallObject wallPrefab = WallPrefabs[Random.Range(0, WallPrefabs.Length)];
         
         int wallCount = Random.Range(6, 10);
@@ -94,13 +88,12 @@ public class BoardManager : MonoBehaviour
 
             m_EmptyCellsList.RemoveAt(randomIndex);
             WallObject newWall = Instantiate(wallPrefab);
+            addObject(newWall, coord);
 
             // si le prefab du wall est à l'étape 1, il reste encore 3 coups et le sprite doit changer 2 fois
             // s'il est à 2, il reste encore 2 coups et le sprite doit changer 1 fois
             // S'il est à 3, il reste 1 coup 
             // et newWall sera Destroy(). 
-            
-            addObject(newWall, coord);
         }
     }
 
