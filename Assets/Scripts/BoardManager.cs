@@ -27,9 +27,6 @@ public class BoardManager : MonoBehaviour
 
     public WallObject[] WallPrefabs;
 
-    public WallObject WallPref;
-    public FoodObject FoodPref;
-
 
     public void Init()
     {
@@ -97,6 +94,12 @@ public class BoardManager : MonoBehaviour
 
             m_EmptyCellsList.RemoveAt(randomIndex);
             WallObject newWall = Instantiate(wallPrefab);
+
+            // si le prefab du wall est à l'étape 1, il reste encore 3 coups et le sprite doit changer 2 fois
+            // s'il est à 2, il reste encore 2 coups et le sprite doit changer 1 fois
+            // S'il est à 3, il reste 1 coup 
+            // et newWall sera Destroy(). 
+            
             addObject(newWall, coord);
         }
     }
