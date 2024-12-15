@@ -70,7 +70,7 @@ public class BoardManager : MonoBehaviour
     {
         FoodObject foodPrefab;
         foodPrefab = FoodPrefabs[Random.Range(0, FoodPrefabs.Length)];
-        
+        Debug.Log("apa nourriture ?");
         int foodCount = Random.Range(minFood, maxFood);
 
         for (int i = 0; i < foodCount; i++)
