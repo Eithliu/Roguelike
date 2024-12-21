@@ -23,6 +23,7 @@ public class BoardManager : MonoBehaviour
     public PlayerController Player;
     public FoodObject[] FoodPrefabs;
     public WallObject[] WallPrefabs;
+    public ExitCellObject exitCellPrefab;
 
     public void Init()
     {
@@ -52,11 +53,18 @@ public class BoardManager : MonoBehaviour
                 
                 m_Tilemap.SetTile(new Vector3Int(x, y, 0), tile);
             }
+
         }
         Player.Spawn(this, new Vector2Int(1, 1));
         m_EmptyCellsList.Remove(new Vector2Int(1, 1));
 
+        Vector2Int endCoord = new Vector2Int(Width - 2, Height - 2);
+        addObject(Instantiate(exitCellPrefab), endCoord);
+        m_EmptyCellsList.Remove(endCoord);
+
+
         GenerateWall();
+        GenerateFood();
         GenerateFood();
     }
     void GenerateFood()
@@ -77,23 +85,28 @@ public class BoardManager : MonoBehaviour
     }
 
     void GenerateWall()
-    {
-        WallObject wallPrefab = WallPrefabs[Random.Range(0, WallPrefabs.Length)];
-        
+    {   
         int wallCount = Random.Range(6, 10);
+
         for (int i = 0; i < wallCount; ++i)
         {
             int randomIndex = Random.Range(0, m_EmptyCellsList.Count);
             Vector2Int coord = m_EmptyCellsList[randomIndex];
 
             m_EmptyCellsList.RemoveAt(randomIndex);
-            WallObject newWall = Instantiate(wallPrefab);
+
+            WallObject newWall = Instantiate(WallPrefabs[0]);
             addObject(newWall, coord);
 
-            // si le prefab du wall est à l'étape 1, il reste encore 3 coups et le sprite doit changer 2 fois
-            // s'il est à 2, il reste encore 2 coups et le sprite doit changer 1 fois
-            // S'il est à 3, il reste 1 coup 
-            // et newWall sera Destroy(). 
+            // Ici, ça génère un Step2, mais en même temps que Step1
+            // Et ça ne détruit pas l'objet une fois son health à 0
+            /*
+            if (Player.Attacking() && i < 4)
+            {
+                Destroy(newWall);
+                addObject(Instantiate(WallPrefabs[i]), coord);
+            }
+            */
         }
     }
 
@@ -127,5 +140,26 @@ public class BoardManager : MonoBehaviour
         obj.transform.position = CellToWorld(coord);
         data.ContainedObject = obj;
         obj.Init(coord);
+    }
+
+    public void Clean()
+    {
+        if (m_BoardData == null)
+        {
+            return;
+        }
+        for (int y = 0; y < Height; ++y)
+        {
+            for (int x = 0; x < Width; ++x)
+            {
+                var cellData = m_BoardData[x, y];
+
+                if (cellData.ContainedObject != null)
+                {
+                    Destroy(cellData.ContainedObject.gameObject);
+                }
+                SetCellTile(new Vector2Int(x, y), null);
+            }
+        }
     }
 }

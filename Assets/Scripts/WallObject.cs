@@ -23,6 +23,7 @@ public class WallObject : CellObject
         m_HealthPoint -= 1;
         if (m_HealthPoint > 0)
         {
+            GameManager.Instance.BoardManager.Player.Attack();
             return false;
         }
         GameManager.Instance.BoardManager.SetCellTile(m_Cell, m_OriginalTile);

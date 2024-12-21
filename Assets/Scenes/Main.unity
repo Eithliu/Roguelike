@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 133081013}
   - component: {fileID: 133081012}
   - component: {fileID: 133081011}
+  - component: {fileID: 133081014}
   m_Layer: 0
   m_Name: PlayerCharacter
   m_TagString: Untagged
@@ -149,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3592dcb9448642e78433014e53df6d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MoveSpeed: 5
 --- !u!212 &133081012
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -219,6 +221,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &133081014
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 133081010}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d91f74f1680024fd6aa470bc9dac2a2b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &206338046
 GameObject:
   m_ObjectHideFlags: 0
@@ -473,7 +497,7 @@ MonoBehaviour:
   Width: 8
   Height: 8
   minFood: 2
-  maxFood: 10
+  maxFood: 4
   GroundTiles:
   - {fileID: 11400000, guid: f1410892fedea4748bfa5fb6cf96e827, type: 2}
   - {fileID: 11400000, guid: 0364470c3804a4527bf6743fef980603, type: 2}
@@ -486,12 +510,13 @@ MonoBehaviour:
   FoodPrefabs:
   - {fileID: 3777235050901374279, guid: 2550e31ad055343bfaa75c4c8384dc7d, type: 3}
   - {fileID: 753554960986301454, guid: 4e47cc07bf9c345b8b1ed6b2ea5fb72b, type: 3}
+  - {fileID: 7775507253498537718, guid: 0ebee4a62ee95480a96feedd737b132a, type: 3}
   WallPrefabs:
-  - {fileID: 3490858134180611970, guid: e31c62a92aacf4edbb7362135e13c71c, type: 3}
   - {fileID: 1672243285282528211, guid: e2e724d19504946d4a0b15675099e352, type: 3}
   - {fileID: -8659753767264958226, guid: 4aecc5790963c4af0a39f05764eb1116, type: 3}
-  WallPref: {fileID: 1672243285282528211, guid: e2e724d19504946d4a0b15675099e352, type: 3}
-  FoodPref: {fileID: 3777235050901374279, guid: 2550e31ad055343bfaa75c4c8384dc7d, type: 3}
+  - {fileID: 2931711139113396620, guid: 8e677d05b88b04cde8518f28736bc62e, type: 3}
+  - {fileID: 3490858134180611970, guid: e31c62a92aacf4edbb7362135e13c71c, type: 3}
+  exitCellPrefab: {fileID: 2061950999}
 --- !u!156049354 &1693698739
 Grid:
   m_ObjectHideFlags: 0
@@ -518,6 +543,51 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1532224195}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2061950998
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2061951000}
+  - component: {fileID: 2061950999}
+  m_Layer: 0
+  m_Name: ExitCell
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2061950999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061950998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5da761e14819d402198a7cf853f66cbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exitTile: {fileID: 11400000, guid: f51ebc97fe4b94f23ac347e9cec2663b, type: 2}
+--- !u!4 &2061951000
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061950998}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.134801, y: 3.9343061, z: 0.044390917}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2104682313
@@ -666,3 +736,4 @@ SceneRoots:
   - {fileID: 133081013}
   - {fileID: 206338048}
   - {fileID: 474658122}
+  - {fileID: 2061951000}
